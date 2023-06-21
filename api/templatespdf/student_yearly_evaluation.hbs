@@ -1,0 +1,103 @@
+{{> header }}
+    <h4 class="bodyheader">
+         {{#equals lang "en"}}
+             Yearly Evaluation List
+        {{else}}
+            বার্ষিক মূল্যায়ন তালিকা
+        {{/equals}}
+    </h4>
+     <p style="text-align: center; font-size:14px;">
+        {{#equals lang "en"}}
+            Center Name: {{data.0.center_name_en}}, Center Code: {{ data.0.center_code }},<br /> Upazila/CityCorporation: {{ data.0.upazila_name_en}} {{ data.0.corporation_name_en}}, District: {{ data.0.district_name_en }},
+            Education Year: {{ data.0.session_name_en }}
+        {{else}}
+            কেন্দ্রের নামঃ{{data.0.center_name_bn}}, কোড নম্বরঃ {{ data.0.center_code }}, <br /> উপজেলা/সিটি কর্পোরেশন: {{ data.0.upazila_name_bn}} {{ data.0.corporation_name_bn }}, জেলাঃ {{ data.0.district_name_bn }},
+            শিক্ষাবর্ষ: {{ data.0.session_name_bn }}
+        {{/equals}}
+    </p>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.name_en	 }}</td>
+                        <td>{{ item.attendance }}</td>
+                        <td>{{ item.bangla }}</td>
+                        <td>{{ item.math }}</td>
+                        <td>{{ item.arabic }}</td>
+                        <td>{{ item.english }}</td>
+                        <td>{{ item.others }}</td>
+                        <td>{{ item.writing }}</td>
+                        <td>{{ item.cleanliness }}</td>
+                        <td>{{ item.overall }}</td>
+                        <td>{{ item.awareness }}</td>
+                        <td>{{ item.total }}</td>
+                        <td>{{ item.grade }}</td>
+                    </tr>
+                {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.name_bn	 }}</td>
+                        <td>{{number item.attendance }}</td>
+                        <td>{{number item.bangla }}</td>
+                        <td>{{number item.math }}</td>
+                        <td>{{number item.arabic }}</td>
+                        <td>{{number item.english }}</td>
+                        <td>{{number item.others }}</td>
+                        <td>{{number item.writing }}</td>
+                        <td>{{number item.cleanliness }}</td>
+                        <td>{{number item.overall }}</td>
+                        <td>{{number item.awareness }}</td>
+                        <td>{{number item.total }}</td>
+                        <td>{{ item.grade }}</td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+     {{!-- <div style="margin: 15px 0px; padding: 0px; text-align:left; font-size: 12px; font-weight:700">
+        {{#equals lang "en"}}
+            <h3>Monthly Evaluation Criteria: </h3>
+            <ul style="list-style-type: decimal;">
+                <li>1. Average Attendance (Marks=20)</li>
+                <li>2. Bangla (Current academic year Lessons taught to be able to say Able to write, be able to read etc.) (Marks = 10)</li>
+                <li>3. Math (Current academic year Lessons taught Mathematical from to say numbers to recognize Able to write be able to calculate etc.)(Marks = 10)</li>
+                <li>4. Arabic (Current academic year taught Text/Synthetic arabic to pronounce letters able to read, write etc.)(Marks=10)</li>
+                <li>5. English (Write to be able to say and be able to read etc.)(Marks = 10)</li>
+                <li>6. Others (Manners, Blessings, Prayer other Some are important to say the matter to be able)(Marks = 10)</li>
+                <li>7. Excellent HandWriting (Marks=10)</li>
+                <li>8. Cleanliness(Marks = 5)</li>
+                <li>9. Overall (Islamic Quiz And on various subjects oral including assessment general subject) (Marks=10)</li>
+                <li>10. Achieved various subjects Acquired awareness knowledge (Marks=5)</li>
+                <li>11. Total Marks (Based on 100 marks)</li>
+                <li>12. Aggregate Grading Value (A/B/C/D)</li>
+            </ul>
+        {{else}}
+            <h3>মাসিক মূল্যায়ন মানদণ্ড: </h3>
+             <ul style="list-style-type: circle;">
+                <li>১. গড় উপস্থিতি (নির্ধারিত নম্বর = ২০)</li>
+                <li>২. বাংলা (চলতি শিক্ষাবর্ষের পাঠগুলি বলতে পারা, লিখতে পারা, পড়তে পারা ইত্যাদি) (নির্ধারিত নম্বর = ১০)</li>
+                <li>৩. গণিত (চলতি শিক্ষাবর্ষের পাঠদানকৃত পাঠ থেকে গাণিতিক সংখ্যা বলতে পারা, চিনতে পারা, লিখতে পারা ও হিসাব করতে পারা ইত্যাদি)(নির্ধারিত নম্বর = ১০)</li>
+                <li>৪. আরবি (চলতি শিক্ষাবর্ষের পাঠদানকৃত পাঠ/সহীহ ভাবে আরবি হরফ উচ্চারণ করতে পারা, পড়তে পারা ও লিখতে পারা ইত্যাদি) (নির্ধারিত নম্বর = ১০)</li>
+                <li>৫. ইংরেজি (লিখতে পারা, বলতে পারা ও পড়তে পারা ইত্যাদি) (নির্ধারিত নম্বর = ১০)</li>
+                <li>৬. অন্যান্য (আদব-কায়দা, দোয়া-দরুদ, নামাজ অন্যান্য কতিপয় জরুরী মাসআলা বলতে পারা) (নির্ধারিত নম্বর = ১০)</li>
+                <li>৭. আকর্ষনীয় হাতের লেখা (নির্ধারিত নম্বর = ১০)</li>
+                <li>৮. পরিষ্কার-পরিচ্ছন্নতা (নির্ধারিত নম্বর = ৫)</li>
+                <li>৯. সার্বিক (ইসলামী কুইজ এবং বিভিন্ন বিষয়ে মৌখিক মূল্যায়ন সাধারণ বিষয় সহ) (নির্ধারিত নম্বর = ১০)</li>
+                <li>১০. বিভিন্ন বিষয়ে অর্জিত সচেতনতা শিক্ষা (নৈতিকতা, মূল্যবোধ, শিষ্টাচার ইত্যাদি) (নির্ধারিত নম্বর = ৫)</li>
+                <li>১১. প্রাপ্ত মোট নাম্বার (১০০ নম্বরের ভিত্তিতে)</li>
+                <li>১২. সার্বিক গ্রেডিং মান (A/B/C/D)</li>
+            </ul>
+      {{/equals}}
+    </div> --}}
+{{> footer }}

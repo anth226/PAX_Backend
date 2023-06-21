@@ -1,0 +1,31 @@
+pipeline {
+    agent {
+        label 'islamicapp'
+    }
+    tools {nodejs "node"}
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm install --prefix /var/lib/jenkins/workspace/Islamicapp-backend/api'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'npm run build --prefix /var/lib/jenkins/workspace/Islamicapp-backend/api'
+//                sh 'chmod -R 777 /var/lib/jenkins/workspace/Islamicapp-backend/'
+            }
+        }
+
+
+        stage('Start Application') {
+            steps {
+//                sh 'pm2 delete main'
+//                sh 'npm install -g pm2'
+                sh 'pm2 restart main'
+//                sh 'pm2 start /var/lib/jenkins/workspace/Islamicapp-backend/api/dist/main.js'
+            }
+        }
+    }
+}

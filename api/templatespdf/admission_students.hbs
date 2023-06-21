@@ -1,0 +1,61 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            School / Madrasa admission list of students in {{data.0.sessionInfo.name_en}} academic year
+        {{else}}
+            {{data.0.sessionInfo.name_bn}} শিক্ষাবর্ষে শিক্ষার্থীদের বিদ্যালয় / মাদ্রাসার ভর্তি ছক
+        {{/equals}}
+        
+    </h4>
+    <p style = "text-align: center; font-size:14px;">
+        {{#equals lang "en"}}
+            Center Name: {{data.0.learningCenterInfo.name_en}}, Center Code: {{ data.0.learningCenterInfo.code}}, <br /> Upazila/CityCorporation: {{ data.0.learningCenterInfo.upazilaId.name_en}} {{ data.0.learningCenterInfo.citycorporation.name_en}}, District: {{ data.0.learningCenterInfo.districtId.name_en }},
+        {{else}}
+            কেন্দ্রের নামঃ{{data.0.learningCenterInfo.name_bn}}, কোড নম্বরঃ {{ data.0.learningCenterInfo.code}}, <br /> উপজেলা/সিটি কর্পোরেশন {{ data.0.learningCenterInfo.upazilaId.name_bn}} {{ data.0.learningCenterInfo.citycorporation.name_bn}}, জেলাঃ {{ data.0.learningCenterInfo.districtId.name_bn }}
+        {{/equals}}
+    </p>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+           {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.studentInfo.name_en }}</td>
+                        <td>{{ item.studentInfo.father_name_en }}</td>
+                        <td>{{ item.studentInfo.mother_name_en }}</td>
+                        <td>{{ item.studentInfo.roll_number }}</td>
+                        <td>{{ item.studentInfo.village }}</td>
+                        <td>{{ item.institute_name }}</td>
+                        <td>
+                            {{#equals item.admission_on "১ম শ্রেণী"}}
+                                1st class
+                            {{else}}
+                                2nd class
+                            {{/equals}}
+                        </td>
+                    </tr>
+             {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.studentInfo.name_bn }}</td>
+                        <td>{{ item.studentInfo.father_name_bn }}</td>
+                        <td>{{ item.studentInfo.mother_name_bn }}</td>
+                        <td>{{ item.studentInfo.roll_number }}</td>
+                        <td>{{ item.studentInfo.village }}</td>
+                        <td>{{ item.institute_name }}</td>
+                        <td>{{ item.admission_on }}</td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+{{> footer }}

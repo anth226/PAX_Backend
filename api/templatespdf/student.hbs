@@ -1,0 +1,80 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Student List
+        {{else}}
+            শিক্ষার্থীদের তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data as | item |}}
+                <tr>
+                    {{#each item.keys as | key |}}
+                        {{#equals key "sl"}}
+                            <td>{{ item.sl }}</td>
+                        {{/equals}}
+                        {{#equals key "name"}}
+                            <td>{{ item.name }}</td>
+                        {{/equals}}
+                        {{#equals key "name_en"}}
+                            <td>{{ item.name_en }}</td>
+                        {{/equals}}
+                        {{#equals key "name_bn"}}
+                            <td>{{ item.name_bn }}</td>
+                        {{/equals}}
+                        {{#equals key "father_mobile"}}
+                            <td>{{ item.father_mobile }}</td>
+                        {{/equals}}
+                         {{#equals key "nid"}}
+                            <td>{{ item.nid }}</td>
+                        {{/equals}}
+                         {{#equals key "learning_center_id"}}
+                            <td>{{ item.learning_center_id }}</td>
+                        {{/equals}}
+                         {{#equals key "code"}}
+                            <td>{{ item.code }}</td>
+                        {{/equals}}
+                          {{#equals key "father_name"}}
+                            <td>{{ item.father_name }}</td>
+                        {{/equals}}
+                          {{#equals key "mother_name"}}
+                            <td>{{ item.mother_name }}</td>
+                        {{/equals}}
+                        {{#equals key "roll_number"}}
+                            <td>{{ item.roll_number }}</td>
+                        {{/equals}}
+                        {{#equals key "blood_group"}}
+                            <td>{{ item.blood_group }}</td>
+                        {{/equals}}
+                        {{#equals key "dob"}}
+                            <td>{{ item.dob }}</td>
+                        {{/equals}}
+                        {{#equals key "doa"}}
+                            <td>{{ item.doa }}</td>
+                        {{/equals}}
+                        {{#equals key "centertypeId"}}
+                            <td>{{ item.centertypeId }}</td>
+                        {{/equals}}
+                        {{#equals key "session"}}
+                            <td>{{ item.session }}</td>
+                        {{/equals}}
+                        {{#equals key "union"}}
+                            <td>{{ item.union }}</td>
+                        {{/equals}}
+                        {{#equals key "status"}}
+                            <td>{{ item.status }}</td>
+                        {{/equals}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+ {{> footer }}

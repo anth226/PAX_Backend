@@ -1,0 +1,59 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Primary Admission List
+        {{else}}
+            প্রাথমিক বিদ্যালয়ে ভর্তি কেন্দ্রের তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.learningCenterInfo.code }}</td>
+                        <td>{{ item.learningCenterInfo.name_en }}</td>
+                        <td>{{ item.learningCenterInfo.centertypeId.name_en }}</td>
+                        <td>{{ item.sessionInfo.name_en }}</td>
+                        <td>{{ item.learningCenterInfo.divisionId.name_en }}</td>
+                        <td>{{ item.learningCenterInfo.districtId.name_en }}</td>
+                        {{#if item.learningCenterInfo.upazilaId}}
+                           <td>{{item.learningCenterInfo.upazilaId.name_en}}</td> 
+                        {{else if item.learningCenterInfo.citycorporation}}
+                            <td>{{item.learningCenterInfo.citycorporation.name_en}}</td>
+                        {{else}}
+                            <td>N/A</td>
+                        {{/if}}
+                    </tr>
+                {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.learningCenterInfo.code }}</td>
+                        <td>{{ item.learningCenterInfo.name_bn }}</td>
+                        <td>{{ item.learningCenterInfo.centertypeId.name_bn }}</td>
+                        <td>{{ item.sessionInfo.name_bn }}</td>
+                        <td>{{ item.learningCenterInfo.divisionId.name_bn }}</td>
+                        <td>{{ item.learningCenterInfo.districtId.name_bn }}</td>
+                        {{#if item.learningCenterInfo.upazilaId}}
+                           <td>{{item.learningCenterInfo.upazilaId.name_bn}}</td> 
+                        {{else if item.learningCenterInfo.citycorporation}}
+                            <td>{{item.learningCenterInfo.citycorporation.name_bn}}</td>
+                        {{else}}
+                            <td>N/A</td>
+                        {{/if}}
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+{{> footer }}

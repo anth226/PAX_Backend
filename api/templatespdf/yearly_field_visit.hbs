@@ -1,0 +1,57 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Yearly Field Visit
+        {{else}}
+           বার্ষিক পরিদর্শন
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+             {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.sessionInfo.name_en }}</td>
+                        <td>{{ item.designationInfo.name_en }}</td>
+                        <td>{{ item.monthly_visit_target }}</td>
+                        <td>{{ item.total_visitors_per_month }}</td>
+                        <td>{{ item.centers_visit_per_day }}</td>
+                        <td>{{ item.total_centers_visit_per_month }}</td>
+                        <td>{{ item.resource_centers_visit_per_day }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_day	 }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_month }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_year }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_five_year }}</td>
+                    </tr>
+            {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                         <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.sessionInfo.name_bn }}</td>
+                        <td>{{ item.designationInfo.name_bn }}</td>
+                        <td>{{ item.monthly_visit_target }}</td>
+                        <td>{{ item.total_visitors_per_month }}</td>
+                        <td>{{ item.centers_visit_per_day }}</td>
+                        <td>{{ item.total_centers_visit_per_month }}</td>
+                        <td>{{ item.resource_centers_visit_per_day }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_day	 }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_month }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_per_year }}</td>
+                        <td>{{ item.total_visitors_visit_total_centers_five_year }}</td>
+                    </tr>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

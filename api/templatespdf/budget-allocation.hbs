@@ -1,0 +1,51 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Budget Allocation List
+        {{else}}
+            বাজেট বরাদ্দ তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                 {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.fiscalyearInfo.name_en }}</td>
+                        <td>{{ item.officetypeInfo.name_en }}</td>
+                        <td>{{ item.districtInfo.division.name_en }}</td>
+                        <td>{{ item.districtInfo.name_en }}</td>
+                        <td>{{ item.subareaInfo.areaInfo.name_en }}</td>
+                        <td>{{ item.subareaInfo.name_en }}</td>
+                        <td>{{number item.quantity }}</td>
+                        <td>{{number item.allocated_amount }}</td>
+                        <td>{{number item.total_amount }}</td>
+                    </tr>
+                {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                       <td>{{inc @index}}</td>
+                        <td>{{ item.fiscalyearInfo.name_bn }}</td>
+                        <td>{{ item.officetypeInfo.name_bn }}</td>
+                        <td>{{ item.districtInfo.division.name_bn }}</td>
+                        <td>{{ item.districtInfo.name_bn }}</td>
+                        <td>{{ item.subareaInfo.areaInfo.name_bn }}</td>
+                        <td>{{ item.subareaInfo.name_bn }}</td>
+                        <td>{{number item.quantity }}</td>
+                        <td>{{number item.allocated_amount }}</td>
+                        <td>{{number item.total_amount }}</td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

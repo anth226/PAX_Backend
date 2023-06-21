@@ -1,0 +1,73 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+           Primary School Admission Report
+        {{else}}
+            প্রাথমিক বিদ্যালয়ে ভর্তির প্রতিবেদন
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                 {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>
+                            {{ item.studentInfo.name_en }}
+                        </td>
+                         <td>
+                            {{ item.institute_name }}
+                        </td>
+                        <td>
+                            {{#equals item.admission_on "১ম শ্রেণী"}}
+                                1st class
+                            {{else}}
+                                2nd class
+                            {{/equals}}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.father_name_en }}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.mother_name_en }}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.village }}
+                        </td>
+                    </tr>
+                {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                       <td>
+                            {{ item.studentInfo.name_bn }}
+                        </td>
+                         <td>
+                            {{ item.institute_name }}
+                        </td>
+                        <td>
+                            {{ item.admission_on }}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.father_name_bn }}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.mother_name_bn }}
+                        </td>
+                        <td>
+                            {{ item.studentInfo.village }}
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+{{> footer }}

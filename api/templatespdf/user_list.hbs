@@ -1,0 +1,47 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            User List
+        {{else}}
+            ব্যবহারকারী তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+                {{#each headerColumns as | header |}}
+                    <th class="tableHeader">{{ header }}</th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                        <tr>
+                            <td>{{ inc @index }}</td>
+                            <td>{{ item.employee.name_en }}</td>
+                            <td>{{ item.employee.designationId.name_en }}</td>
+                            <td>{{ item.employee.officeId.officetypeId.name_en }}</td>
+                            <td>{{ item.employee.officeId.name_en }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.phone }}</td>
+                            <td>{{status item.status }}</td>
+                        </tr>
+                {{/each}}
+                {{else}}
+                     {{#each data as | item |}}
+                        <tr>
+                            <td>{{ inc @index }}</td>
+                            <td>{{ item.employee.name_bn }}</td>
+                            <td>{{ item.employee.designationId.name_bn }}</td>
+                            <td>{{ item.employee.officeId.officetypeId.name_bn }}</td>
+                            <td>{{ item.employee.officeId.name_bn }}</td>
+                            <td>{{ item.email }}</td>
+                            <td>{{ item.phone }}</td>
+                            <td>{{status item.status }}</td>
+                        </tr>
+                    {{/each}}
+                {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

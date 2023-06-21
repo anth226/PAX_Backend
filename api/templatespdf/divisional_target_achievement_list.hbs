@@ -1,0 +1,89 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+           Inspection Target Vs Achievment
+        {{else}}
+           পরিদর্শন লক্ষ্য বনাম অর্জন
+        {{/equals}}
+    </h4>
+<table>
+    <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+    </thead>
+    <tbody>
+    
+    {{#equals lang "en"}}
+        {{#each data as | item |}}
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td style = "border: 0px;">{{ item.name_en }}</td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        {{#each item.subItems as | subItem |}}
+                            <tr>
+                                <td style = "border: 0px;">{{ subItem.value }}</td>
+                            </tr>
+                        {{/each}}
+                    </table>
+                </td>
+                {{#each item.subChildItems as | subChildItem |}}
+                    <td>
+                        <table>
+                            <tr>
+                                <td style = "border: 0px;">{{ subChildItem.target }}</td>
+                            </tr>
+                            <tr>
+                                <td style = "border: 0px;">{{ subChildItem.achievement }}</td>
+                            </tr>                        
+                        </table>
+                    </td>
+                {{/each}}
+            </tr>
+        {{/each}}
+        {{else}}
+            {{#each data as | item |}}
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td style = "border: 0px;">{{ item.name_bn }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table>
+                            {{#each item.subItems as | subItem |}}
+                                <tr>
+                                    <td style = "border: 0px;">{{ subItem.value_bn }}</td>
+                                </tr>
+                            {{/each}}
+                        </table>
+                    </td>
+                    {{#each item.subChildItems as | subChildItem |}}
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style = "border: 0px;">{{ subChildItem.target }}</td>
+                                </tr>
+                                <tr>
+                                    <td style = "border: 0px;">{{ subChildItem.achievement }}</td>
+                                </tr>                        
+                            </table>
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+     {{/equals}}
+</tbody>
+
+</table>
+ {{> footer }}
