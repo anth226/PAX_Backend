@@ -1,0 +1,100 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Tour Planning List
+        {{else}}
+            ভ্রমণ পরিকল্পনা তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+                {{#each headerColumns as | header |}}
+                    <th class="tableHeader">{{ header }}</th>
+                {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{ inc @index }}</td>
+                        <td>
+                            {{#each item.visitors as | visitor |}}
+                                <p style = "margin-bottom: 5px;">{{ visitor.name_en }}</p>
+                            {{/each}}
+                            {{#each item.visitors as | visitor |}}
+                                <p style = "margin-bottom: 5px;">{{ visitor.designation.name_en }}</p>
+                            {{/each}}
+                        </td>
+                        {{!-- <td>{{ item.districtInfo.name_en }}</td> --}}
+                        <td>{{ item.upazilaInfo.name_en }}</td>
+                        <td>{{date item.visit_date }}</td>
+                        {{!-- <td>{{ item.month }}</td> --}}
+                        <td>{{date item.travel_start_date }} / {{date item.travel_return_date }}</td>
+                        {{!-- <td>{{date item.travel_return_date }}</td> --}}
+                        {{!-- <td>
+                            {{#each item.learning_centers as | learningCenter |}}
+                                <p style = "margin-bottom: 5px;">{{ learningCenter.name_en }} - {{ learningCenter.code }}</p>
+                            {{/each}}
+                        </td>
+                        <td>
+                            {{#each item.resource_centers as | resourceCenter |}}
+                                <p style = "margin-bottom: 5px;">{{ resourceCenter.name_en }} - {{ resourceCenter.code }}</p>
+                            {{/each}}
+                        </td> --}}
+                        <td>{{ item.submittedBy.name_en }}</td>
+                        <td>{{ item.final_status }}</td>
+                    </tr>
+                {{/each}}
+                {{else}}
+                     {{#each data as | item |}}
+                        <tr>
+                            <td>{{ inc @index }}</td>
+                            <td>
+                                {{#each item.visitors as | visitor |}}
+                                    <p style = "margin-bottom: 5px;">{{ visitor.name_bn }}</p>
+                                {{/each}}
+                                {{#each item.visitors as | visitor |}}
+                                    <p style = "margin-bottom: 5px;">{{ visitor.designation.name_bn }}</p>
+                                {{/each}}
+                            </td>
+                            {{!-- <td >
+                                {{#each item.visitors as | visitor |}}
+                                    <p style = "margin-bottom: 5px;">{{ visitor.designation.name_bn }}</p>
+                                {{/each}}
+                            </td> --}}
+                            {{!-- <td>{{ item.districtInfo.name_bn }}</td> --}}
+                            <td>{{ item.upazilaInfo.name_bn }}</td>
+                            <td>{{date item.visit_date }}</td>
+                            {{!-- <td>{{ item.month }}</td> --}}
+                            <td>{{date item.travel_start_date }} / {{date item.travel_return_date }}</td>
+                            {{!-- <td>{{date item.travel_return_date }}</td> --}}
+                            {{!-- <td>
+                                {{#each item.learning_centers as | learningCenter |}}
+                                    <p style = "margin-bottom: 5px;">{{ learningCenter.name_bn }} - {{ learningCenter.code }}</p>
+                                {{/each}}
+                            </td>
+                            <td >
+                                {{#each item.resource_centers as | resourceCenter |}}
+                                    <p style = "margin-bottom: 5px;">{{ resourceCenter.name_bn }} - {{ resourceCenter.code }}</p>
+                                {{/each}}
+                            </td> --}}
+                            <td>{{ item.submittedBy.name_bn }}</td>
+                            <td>
+                                {{#equals item.final_status "Pending"}}
+                                    বিচারাধীন
+                                  {{else}}
+                                    {{#equals item.final_status "Approve"}}
+                                        অনুমোদিত
+                                    {{else}}
+                                        বাতিল
+                                    {{/equals}}
+                                {{/equals}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

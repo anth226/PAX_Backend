@@ -1,0 +1,62 @@
+{{> header }}
+    <h4 class="bodyheader">
+         {{#equals lang "en"}}
+            Education Center List
+        {{else}}
+            শিক্ষা কেন্দ্রের তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#each data as | item |}}
+                <tr>
+                    {{#each item.keys as | key |}}
+                        {{#equals key "sl"}}
+                            <td>{{ item.sl }}</td>
+                        {{/equals}}
+                        {{#equals key "name"}}
+                            <td>{{ item.name }}</td>
+                        {{/equals}}
+                        {{#equals key "name_en"}}
+                            <td>{{ item.name_en }}</td>
+                        {{/equals}}
+                        {{#equals key "name_bn"}}
+                            <td>{{ item.name_bn }}</td>
+                        {{/equals}}
+                        {{#equals key "code"}}
+                            <td>{{ item.code }}</td>
+                        {{/equals}}
+                        {{#equals key "centertypeId"}}
+                            <td>{{ item.centertypeId }}</td>
+                        {{/equals}}
+                        {{#equals key "formation_date"}}
+                            <td>{{ item.formation_date }}</td>
+                        {{/equals}}
+                         {{#equals key "area"}}
+                            <td>{{ item.area }}</td>
+                        {{/equals}}
+                        {{#equals key "start_time"}}
+                            <td>{{ item.start_time }}</td>
+                        {{/equals}}
+                        {{#equals key "end_time"}}
+                            <td>{{ item.end_time }}</td>
+                        {{/equals}}
+                        {{#equals key "placeId"}}
+                            <td>{{ item.placeId }}</td>
+                        {{/equals}}
+                        {{#equals key "status"}}
+                            <td>{{ item.status }}</td>
+                        {{/equals}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{> footer }}

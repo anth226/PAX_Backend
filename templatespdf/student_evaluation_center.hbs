@@ -1,0 +1,45 @@
+{{> header }}
+    <h4 class="bodyheader">
+         {{#equals lang "en"}}
+             Monthly Evaluation Centers List
+        {{else}}
+            মাসিক মূল্যায়ন কেন্দ্রের তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.studentInfo.learning_center_id.code }}</td>
+                        <td>{{ item.studentInfo.learning_center_id.name_en }}</td>
+                        <td>{{ item.studentInfo.learning_center_id.centertypeId.name_en }}</td>
+                        <td>{{ item.sessionInfo.name_en }}</td>
+                        <td>{{ item.month }}</td>
+                        <td>{{status item.status}}</td>
+                    </tr>
+           {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.studentInfo.learning_center_id.code }}</td>
+                        <td>{{ item.studentInfo.learning_center_id.name_bn }}</td>
+                        <td>{{ item.studentInfo.learning_center_id.centertypeId.name_bn }}</td>
+                        <td>{{ item.sessionInfo.name_en }}</td>
+                        <td>{{ item.month }}</td>
+                        <td>{{status item.status}}</td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+{{> footer }}

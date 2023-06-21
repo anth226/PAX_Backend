@@ -1,0 +1,43 @@
+{{> header }}
+    <h4 class="bodyheader">
+         {{#equals lang "en"}}
+            Teacher Evaluation List
+        {{else}}
+            শিক্ষকগণের মূল্যায়ন তালিকা
+        {{/equals}}
+    </h4>
+    <table style = "width:80%;">
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+            {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.sessionInfo.name_en }}</td>
+                        <td>{{ item.teacherInfo.divisionId.name_en }}</td>
+                        <td>{{ item.teacherInfo.districtId.name_en }}</td>
+                        <td>{{ item.teacherInfo.upazilaId.name_en }}</td>
+                        <td>{{status item.status}}</td>
+                    </tr>
+            {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{ item.sessionInfo.name_bn }}</td>
+                        <td>{{ item.teacherInfo.divisionId.name_bn }}</td>
+                        <td>{{ item.teacherInfo.districtId.name_bn }}</td>
+                        <td>{{ item.teacherInfo.upazilaId.name_bn }}</td>
+                        <td>{{status item.status}}</td>
+                    </tr>
+                 {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

@@ -1,0 +1,68 @@
+{{> header }}
+    <h4 class="bodyheader">
+         {{#equals lang "en"}}
+            Employee List
+        {{else}}
+            কর্মচারী তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>                
+        <tbody>
+            {{#each data as | item |}}
+                <tr>
+                    {{#each item.keys as | key |}}
+                        {{#equals key "sl"}}
+                            <td>{{ item.sl }}</td>
+                        {{/equals}}
+                        {{#equals key "name"}}
+                            <td>{{ item.name }}</td>
+                        {{/equals}}
+                        {{#equals key "mobile"}}
+                            <td>{{ item.mobile }}</td>
+                        {{/equals}}
+                         {{#equals key "nid"}}
+                            <td>{{ item.nid }}</td>
+                        {{/equals}}
+                         {{#equals key "employeetypeId"}}
+                            <td>{{ item.employeetypeId }}</td>
+                        {{/equals}}
+                         {{#equals key "officeId"}}
+                            <td>{{ item.officeId }}</td>
+                        {{/equals}}
+                        {{#equals key "email"}}
+                            <td style=" word-wrap: break-word; word-break: break-all; white-space: normal;">{{ item.email }}</td>
+                        {{/equals}}
+                          {{#equals key "father_name"}}
+                            <td >{{ item.father_name }}</td>
+                        {{/equals}}
+                          {{#equals key "mother_name"}}
+                            <td>{{ item.mother_name }}</td>
+                        {{/equals}}
+                        {{#equals key "designationId"}}
+                            <td>{{ item.designationId }}</td>
+                        {{/equals}}
+                        {{#equals key "employee_id"}}
+                            <td>{{ item.employee_id }}</td>
+                        {{/equals}}
+                         {{#equals key "address"}}
+                            <td style=" word-wrap: break-word; word-break: break-all; white-space: normal;">{{ item.address }}</td>
+                        {{/equals}}
+                        {{#equals key "join_date"}}
+                            <td>{{ item.join_date }}</td>
+                        {{/equals}}
+                        {{#equals key "status"}}
+                            <td>{{ item.status }}</td>
+                        {{/equals}}
+                    {{/each}}
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+{{> footer }}

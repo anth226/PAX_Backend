@@ -1,0 +1,49 @@
+{{> header }}
+    <h4 class="bodyheader">
+        {{#equals lang "en"}}
+            Resource Center Inspection List
+        {{else}}
+           রিসোর্স কেন্দ্র পরিদর্শন তালিকা
+        {{/equals}}
+    </h4>
+    <table>
+        <thead>
+            <tr>
+            {{#each headerColumns as | header |}}
+                <th class="tableHeader">{{ header }}</th>
+            {{/each}}
+            </tr>
+        </thead>
+        <tbody>
+             {{#equals lang "en"}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{date item.visit_date }}</td>
+                        <td>{{ item.employee.name_en }}</td>
+                        <td>{{ item.employee.designationId.name_en }}</td>
+                        <td>{{ item.resource_center.name_en }}</td>
+                        <td>{{ item.resource_center.resourcecentertypeId.name_en }}</td>
+                        <td>{{ item.resource_center.divisionId.name_en }}</td>
+                        <td>{{ item.resource_center.districtId.name_en }}</td>
+                        <td>{{ item.resource_center.upazilaId.name_en }} {{ item.resource_center.citycorporation.name_en }}</td>
+                    </tr>
+            {{/each}}
+            {{else}}
+                {{#each data as | item |}}
+                    <tr>
+                        <td>{{inc @index}}</td>
+                        <td>{{date item.visit_date }}</td>
+                        <td>{{ item.employee.name_bn }}</td>
+                        <td>{{ item.employee.designationId.name_bn }}</td>
+                        <td>{{ item.resource_center.name_bn }}</td>
+                        <td>{{ item.resource_center.resourcecentertypeId.name_bn }}</td>
+                        <td>{{ item.resource_center.divisionId.name_bn }}</td>
+                        <td>{{ item.resource_center.districtId.name_bn }}</td>
+                        <td>{{ item.resource_center.upazilaId.name_bn }} {{ item.resource_center.citycorporation.name_bn }}</td>
+                    </tr>
+                {{/each}}
+            {{/equals}}
+        </tbody>
+    </table>
+ {{> footer }}

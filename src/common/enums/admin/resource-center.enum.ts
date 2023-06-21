@@ -1,0 +1,4 @@
+export enum ResourceCenterEnums {
+  MRESOURCECENTER = "MRESOURCECENTER",
+  GRESOURCECENTER = "GRESOURCECENTER",
+}
