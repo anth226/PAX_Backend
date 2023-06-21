@@ -20,7 +20,7 @@ import { ADMIN_RESET_PASSWORD_LISTENER } from "src/observer/listener/admin/admin
 import { Repository } from "typeorm";
 import { ADMIN_JWT_SECRET } from "../../../../common/configs/config";
 import { AdminUserDto } from "../../../../common/dto/admin-user.dto";
-import { AdminUserEntity } from "../../../../common/entity/users/admin/user.entity";
+import { UserEntity } from "../../../../common/entity/users/admin/user.entity";
 import { CustomException } from "../../../../common/exceptions/customException";
 import getDate from "../../../../common/function/getDate";
 import { PasswordForgotTokenDto } from "../dto/PwsResetOtpToken.dto";
@@ -35,8 +35,8 @@ export class AdminAuthService {
   private readonly algorithm = "aes-256-cbc";
   private readonly salt = process.env.CRYPTO_SALT;
   constructor(
-    @InjectRepository(AdminUserEntity)
-    private readonly adminUserRepository: Repository<AdminUserEntity>,
+    @InjectRepository(UserEntity)
+    private readonly adminUserRepository: Repository<UserEntity>,
     @InjectRepository(PasswordResetsEntity)
     private readonly passwordResetsRepository: Repository<PasswordResetsEntity>,
     private eventEmitter: EventEmitter2,
@@ -90,7 +90,7 @@ export class AdminAuthService {
     }
   }
 
-  private login(user: AdminUserEntity, role: string): string {
+  private login(user: UserEntity, role: string): string {
     const payload = {
       id: user.id,
       user_type: role,
