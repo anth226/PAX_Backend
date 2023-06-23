@@ -29,10 +29,12 @@ import { PasswordForgotTokenOtpCheckDto } from "../../dto/PwsReseTokenCheck.dto"
 import { PasswordForgotTokenDto } from "../../dto/PwsResetOtpToken.dto";
 import { UriTokenIdDTO } from "../../dto/uri-token-id.dto";
 import { AdminAuthService } from "../../services/auth.service";
+import { FindUserByEmailDto } from "../../dto/find-user-by-email.dto";
+import { FindUserByPasswordDto } from "../../dto/find-user-by-password.dto";
 
 @ApiTags("auth")
-@Controller("v1/admin/auth")
-export class AdminAuthController {
+@Controller("v1/user/auth")
+export class UserAuthController {
   constructor(
     private readonly authService: AdminAuthService,
     private readonly redisService: RedisService,
@@ -55,6 +57,105 @@ export class AdminAuthController {
       statusCode: HttpStatus.OK,
       message: "Successfully logged in",
       data: { auth },
+      error: {},
+    });
+  }
+
+  @Post("/findByEmail")
+  @ApiResponse({
+    description: "User Found",
+    status: HttpStatus.OK,
+  })
+  async finByEmail(
+    @Query() query: LanguageDto,
+    @Body(new DtoValidationPipe()) findUserByEmail: FindUserByEmailDto
+  ) {
+    const existUser = await this.authService.getUserByEmail(findUserByEmail);
+    if (!existUser) {
+      throw new ValidationException([
+        {
+          field: "identifier",
+          message: await this.i18n.t("validation.COMMON.USER_NOT_FOUND", {
+            lang: query.lang,
+          }),
+        },
+      ]);
+    }
+    return new PayloadResponseDTO({
+      statusCode: HttpStatus.OK,
+      message: "We have e-mailed your Verification Code",
+      data: { existUser },
+      error: {},
+    });
+  }
+
+  @Post("/findByPassword")
+  @ApiResponse({
+    description: "User Found",
+    status: HttpStatus.OK,
+  })
+  async finByPassword(
+    @Query() query: LanguageDto,
+    @Body(new DtoValidationPipe()) findUserByPassword: FindUserByPasswordDto
+  ) {
+ 
+    const existUser = await this.authService.getUserByPassword(
+      findUserByPassword,
+      query.lang
+    );
+    console.log(existUser);
+    
+    if (!existUser) {
+      throw new ValidationException([
+        {
+          field: "email",
+          message: await this.i18n.t("validation.COMMON.USER_NOT_FOUND", {
+            lang: query.lang,
+          }),
+        },
+      ]);
+    }
+    return new PayloadResponseDTO({
+      statusCode: HttpStatus.OK,
+      message: "email",
+      // eslint-disable-next-line prettier/prettier
+      data: { existUser },
+      error: {},
+    });
+  }
+
+
+  @Post("/registration")
+  @ApiResponse({
+    description: "User Found",
+    status: HttpStatus.OK,
+  })
+  async registration(
+    @Query() query: LanguageDto,
+    @Body(new DtoValidationPipe()) findUserByPassword: FindUserByPasswordDto
+  ) {
+ 
+    const existUser = await this.authService.getUserByPassword(
+      findUserByPassword,
+      query.lang
+    );
+    console.log(existUser);
+    
+    if (!existUser) {
+      throw new ValidationException([
+        {
+          field: "email",
+          message: await this.i18n.t("validation.COMMON.USER_NOT_FOUND", {
+            lang: query.lang,
+          }),
+        },
+      ]);
+    }
+    return new PayloadResponseDTO({
+      statusCode: HttpStatus.OK,
+      message: "email",
+      // eslint-disable-next-line prettier/prettier
+      data: { existUser },
       error: {},
     });
   }

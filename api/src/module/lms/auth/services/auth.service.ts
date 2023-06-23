@@ -11,12 +11,10 @@ import * as crypto from "crypto";
 import * as jwt from "jsonwebtoken";
 import { PasswordForgotDto } from "../dto/password-forgot.dto";
 import { PasswordResetsEntity } from "../../../../common/shared/password-reset/password-resets.entity";
-import { AdminResetPasswordEvent } from "src/observer/event/admin/admin-reset-password.event";
 import { PasswordRestDto } from "../dto/password-rest.dto";
 import { ResetVerificationDto } from "../dto/reset-verification.dto";
 import { I18nService } from "nestjs-i18n";
 import { RedisService } from "nestjs-redis";
-import { ADMIN_RESET_PASSWORD_LISTENER } from "src/observer/listener/admin/admin-reset-password.listener";
 import { Repository } from "typeorm";
 import { ADMIN_JWT_SECRET } from "../../../../common/configs/config";
 import { AdminUserDto } from "../../../../common/dto/admin-user.dto";
@@ -29,6 +27,12 @@ import { AdminAuthDto } from "../dto/auth.dto";
 import { PasswordForgotTokenOtpCheckDto } from "../dto/PwsReseTokenCheck.dto";
 import { ValidationException } from "src/common/exceptions/validationException";
 import { isActive } from "src/common/queries/is-active-status.query";
+import { FindUserByEmailDto } from "../dto/find-user-by-email.dto";
+import { FindUserByPasswordDto } from "../dto/find-user-by-password.dto";
+import { USER_RESET_PASSWORD_LISTENER } from "../../../../observer/listener/admin/user-reset-password.listener";
+import { UserResetPasswordEvent } from "../../../../observer/event/admin/admin-reset-password.event";
+import { UserLoginOtpEvent } from "src/observer/event/admin/user-login-otp.event";
+import { USER_LOGIN_OTP_LISTENER } from "src/observer/listener/admin/user-login-otp.listener";
 @Injectable()
 export class AdminAuthService {
   private readonly secrets: string[];
@@ -51,20 +55,16 @@ export class AdminAuthService {
       //find user with identifier
       const user = await this.adminUserRepository.findOne({
         where: [{ email: auth.identifier }, { phone: auth.identifier }],
-
       });
       //if not found throw an error
       if (!user) throw new ForbiddenException("User not found");
-
       //if inactive then throw an error
-      if (user.status === 0)
-        throw new ForbiddenException(
-          "You are inactive, please contact with admin"
-        );
-
+      // if (user.status === 0)
+      //   throw new ForbiddenException(
+      //     "You are inactive, please contact with admin"
+      //   );
       //check password is valid
       const match = await bcrypt.compare(auth.password, user.password);
-
       //if not match then throw an error
       if (!match)
         throw new ForbiddenException(
@@ -72,10 +72,6 @@ export class AdminAuthService {
         );
       const token = this.login(user, user.user_type);
       const user_id = user.id;
-
-      let resourceCenter: any;
-
-
       return {
         user_id,
         user_type: user.user_type,
@@ -97,7 +93,6 @@ export class AdminAuthService {
     };
     return jwt.sign(payload, ADMIN_JWT_SECRET);
   }
-
 
   async passwordReset(passwordRestDto: PasswordRestDto) {
     try {
@@ -166,16 +161,86 @@ export class AdminAuthService {
       throw new CustomException(error);
     }
   }
-  //Teacher Login
+  //Find User By email
   public async getUserByEmail(
-    passwordForgotDto: PasswordForgotDto
+    FindUserByEmail: FindUserByEmailDto
   ): Promise<any> {
-    const { identifier } = passwordForgotDto;
+    const { identifier } = FindUserByEmail;
     const findUser = await this.adminUserRepository.findOne({
       where: { email: identifier },
     });
     // console.log("ffff",findUser);
     return findUser;
+  }
+
+  //Find User By password
+  public async getUserByPassword(
+    FindUserByPassword: FindUserByPasswordDto,
+    lang?: string
+  ): Promise<any> {
+    const { email, password } = FindUserByPassword;
+    const user = await this.adminUserRepository.findOne({
+      where: { email: email },
+    });
+
+    if (!user) {
+      console.log("ddd", user);
+      new ForbiddenException("ddd doesn't match");
+    }
+    if (user) {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) throw new ForbiddenException("Password doesn't match");
+      if (match) {
+        //storing otp in redis server that will expired after 2 minutes//
+        const rIndex = Math.floor(
+          Math.random() * Math.floor(this.secrets.length)
+        );
+        const token = crypto
+          .createHmac("sha256", this.secrets[rIndex])
+          .update(
+            JSON.stringify({
+              nonce: getDate().getTime(),
+              email: user.email,
+            })
+          )
+          .digest("hex");
+
+        const password = this.secrets[rIndex];
+        const key = crypto.scryptSync(password, this.salt, 24);
+        const iv = crypto.randomBytes(16);
+        const otp = `${parseInt(
+          crypto.randomBytes(8).toString("hex"),
+          16
+        )}`.substring(0, 6);
+        const newResetOtp = {
+          nonce: getDate().getTime(),
+          token: token,
+          otp: otp,
+          email: user.email,
+          expire: process.env.EXPIRED_LOGIN_OTP_TIME,
+        };
+
+        const status = await this.redisService
+          .getClient("REDIS_REGISTER")
+          .set(
+            token,
+            JSON.stringify(newResetOtp),
+            "EX",
+            process.env.EXPIRED_LOGIN_OTP_TIME
+          );
+        ///storing otp in redis server that will expired after 2 minutes//
+        this.eventEmitter.emit(
+          USER_LOGIN_OTP_LISTENER,
+          new UserLoginOtpEvent({
+            receiver_email: newResetOtp.email,
+            reset_code: otp,
+          })
+        );
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
   async passwordForgotOtp(
@@ -217,8 +282,8 @@ export class AdminAuthService {
         process.env.EXPIRED_RESET_TIME
       );
     this.eventEmitter.emit(
-      ADMIN_RESET_PASSWORD_LISTENER,
-      new AdminResetPasswordEvent({
+      USER_RESET_PASSWORD_LISTENER,
+      new UserResetPasswordEvent({
         id: newResetOtp.token,
         receiver_email: newResetOtp.email,
         reset_code: otp,
@@ -297,7 +362,7 @@ export class AdminAuthService {
       //sorry for app work i give validation Exception instead  we now give validation
       throw new ValidationException([
         {
-          field: "otp",
+          field: "password",
           message: await this.i18n.t("validation.COMMON.OTP_NOT_MATCH_MSG", {
             lang: lang,
           }),

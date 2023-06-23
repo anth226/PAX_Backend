@@ -2,7 +2,6 @@ import { Module } from "@nestjs/common";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
-import { AdminModule } from "./module/admin/admin.module";
 import { PublicModule } from "./module/public/public.module";
 import { I18nModule, AcceptLanguageResolver, QueryResolver } from "nestjs-i18n";
 import * as path from "path";
@@ -14,6 +13,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ObserverModule } from "./observer/observer.module";
 import { PayloadLoggingInterceptor } from "./common/interceptors/payload-logging.interceptor";
+import { LmsModule } from "./module/lms/lms.module";
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -51,7 +51,7 @@ import { PayloadLoggingInterceptor } from "./common/interceptors/payload-logging
       },
       ,
     ]),
-    AdminModule,
+    LmsModule,
     PublicModule,
     MailModule,
     ObserverModule,

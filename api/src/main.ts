@@ -33,12 +33,10 @@ async function bootstrap() {
 
   app.setGlobalPrefix("api");
   app.enableCors(options);
-
   const config = new DocumentBuilder()
     .setTitle("Islamic Foundation")
     .setDescription("Islamic Foundation API description")
     .setVersion("1.0")
-
     .addBearerAuth(
       { type: "http", scheme: "bearer", bearerFormat: "JWT" },
       "JWT"
@@ -66,7 +64,7 @@ async function bootstrap() {
 
   await app.listen(port);
   Logger.log(
-    `Server is Running(🔥) on http://${host}:${port}/api-doc/admin`,
+    `Server is Running(🔥) on http://${host}:${port}/api-doc/lms`,
     "Islamic Foundation -BackendServer"
   );
 }
