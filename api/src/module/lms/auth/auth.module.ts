@@ -2,7 +2,7 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { UserEntity } from "../../../common/entity/users/admin/user.entity";
-import { AdminAuthController } from "./controllers/auth/auth.controller";
+import { UserAuthController } from "./controllers/auth/auth.controller";
 import { AdminAuthService } from "./services/auth.service";
 import { ADMIN_JWT_SECRET } from "../../../common/configs/config";
 import { PasswordResetsEntity } from "../../../common/shared/password-reset/password-resets.entity";
@@ -15,7 +15,7 @@ import { PasswordResetsEntity } from "../../../common/shared/password-reset/pass
       signOptions: { expiresIn: "1" },
     }),
   ],
-  controllers: [AdminAuthController],
+  controllers: [UserAuthController],
   providers: [AdminAuthService],
 })
-export class AdminAuthModule {}
+export class AuthModule {}

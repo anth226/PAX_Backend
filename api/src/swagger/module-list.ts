@@ -1,10 +1,10 @@
-import { AdminModule, AdminModuleList } from "src/module/admin/admin.module";
+import { LmsModuleList } from "../module/lms/lms.module";
 import { PublicModuleList } from "src/module/public/public.module";
 
 const ModuleList = [
   {
-    url: "/admin",
-    Module: AdminModuleList,
+    url: "/lms",
+    Module: LmsModuleList,
   },
 
   // Website Api Will be avilable here

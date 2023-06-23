@@ -1,16 +1,7 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
-} from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany } from "typeorm";
 import { AdminUserTypeEnum } from "../../../enums/admin/user-type.enum";
 import { CommonEntity } from "../../../../common/common.entity";
-import { UserLoginCodeEntity } from "src/module/admin/auth/entity/user-login-code.entity";
+import { UserLoginCodeEntity } from "../../../../module/lms/auth/entity/user-login-code.entity";
 
 @Entity("users")
 export class UserEntity extends CommonEntity {
@@ -32,8 +23,6 @@ export class UserEntity extends CommonEntity {
   user_type: string;
   @Column({ type: "varchar", nullable: true })
   individualAccount: string;
-  @JoinColumn({ name: "employeeId" })
-  employee: string;
   @Column({ nullable: true })
   photo: string;
   @Column({ nullable: true })

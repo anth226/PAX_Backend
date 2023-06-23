@@ -104,50 +104,40 @@ export class MailService {
     }
   }
 
-  ///Teacher Email Notification For
+  ///Email Notification For Otp Login User
 
-  teacherOtpMail(
-    name_bn: string,
+  userLoginMail(
     receiver_email: string,
     receiver_name: string,
-    code: string
+    reset_code: number
   ) {
-    let actionUrl = "";
-    if (process.env.APP_LINK) {
-      actionUrl = process.env.APP_LINK;
-    } else {
-      actionUrl = "http://3.109.139.226:3006/";
-    }
-
     this.mailerService
       .sendMail({
         to: receiver_email,
         // from: '', // by default it comes from .env MAIL_FROM_NAME file
-        subject: "নতুন ব্যবহারকারীর জন্য নিবন্ধন ",
-        template: "teacher-mail",
+        subject: "OTP For reset password ",
+        template: "admin-reset-password-mail",
         context: {
-          name_bn,
-          receiver_email,
-          code,
-          actionUrl,
+          receiver_name,
+          reset_code,
         },
       })
       .then(async (res) => {
         await this.mailLogRepository.save({
           email_sent_to: receiver_email,
-          message: "নতুন শিক্ষক ব্যবহারকারীর জন্য নিবন্ধন",
-          success: JSON.stringify(res),
+          message: "OTP For reset password ",
+          success: JSON.stringify(res?.response),
           error: null,
         });
       })
       .catch(async (err) => {
         await this.mailLogRepository.save({
           email_sent_to: receiver_email,
-          message: "নতুন শিক্ষক ব্যবহারকারীর জন্য নিবন্ধন",
-          error: JSON.stringify(err?.response),
+          message: "OTP For reset password ",
           success: null,
+          error: JSON.stringify(err?.response),
         });
-        console.log(err);
       });
   }
+
 }

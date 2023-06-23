@@ -1,17 +1,17 @@
 import { Injectable } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { MailService } from "../../../module/mail/mail.service";
-import { AdminResetPasswordEvent } from "../../../observer/event/admin/admin-reset-password.event";
+import { UserResetPasswordEvent } from "../../../observer/event/admin/admin-reset-password.event";
 
 
-export const ADMIN_RESET_PASSWORD_LISTENER = "admin.reset.password";
+export const USER_RESET_PASSWORD_LISTENER = "user.reset.password";
 
 @Injectable()
-export class AdminResetPasswordListener {
+export class UserResetPasswordListener {
   constructor(public readonly mailService: MailService) {}
 
-  @OnEvent(ADMIN_RESET_PASSWORD_LISTENER)
-  handleAdminResetPasswordEvent(event: AdminResetPasswordEvent) {
+  @OnEvent(USER_RESET_PASSWORD_LISTENER)
+  handleAdminResetPasswordEvent(event: UserResetPasswordEvent) {
     this.mailService.adminResetPasswordMail(
       event.id,
       event.receiver_email,
