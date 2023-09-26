@@ -6,9 +6,7 @@ import { DataTransformGlobalPipe } from "./common/pipes/dataTransformGlobalPipe"
 import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 import swagger from "./swagger/swagger";
 import {
-  i18nValidationErrorFactory,
   I18nValidationPipe,
-  I18nValidationExceptionFilter,
   I18nService,
 } from "nestjs-i18n";
 import { HttpExceptionFilter } from "./common/shared/filters/http-exception.filter";
@@ -66,7 +64,7 @@ async function bootstrap() {
 
   await app.listen(port);
   Logger.log(
-    `Server is Running(🔥) on http://${host}:${port}/api-doc/admin`,
+    `Server is Running(🔥) on http://${host}:${port}/api-doc/note`,
     "Islamic Foundation -BackendServer"
   );
 }

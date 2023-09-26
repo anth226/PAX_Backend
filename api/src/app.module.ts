@@ -36,21 +36,7 @@ import { PayloadLoggingInterceptor } from "./common/interceptors/payload-logging
       },
     }),
     TypeOrmModule.forFeature([LogApiGatewayRequestResponseEntity]),
-    RedisModule.register([
-      {
-        url: process.env.REDIS_SESSION,
-        name: "REDIS_SESSION",
-      },
-      {
-        url: process.env.REDIS_TMP_FILE,
-        name: "REDIS_TMP_FILE",
-      },
-      {
-        url: process.env.REDIS_REGISTER,
-        name: "REDIS_REGISTER",
-      },
-      ,
-    ]),
+
     AdminModule,
     PublicModule,
     MailModule,

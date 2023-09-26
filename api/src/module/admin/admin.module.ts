@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
-import { AdminAuthModule } from "./auth/auth.module";
+import { NotesModule } from "../users/notes.module";
 
-export const AdminModuleList = [
-  AdminAuthModule,
+
+export const NoteModuleList = [
+  NotesModule,
 ];
 @Module({
-  imports: AdminModuleList,
+  imports: NoteModuleList,
   controllers: [],
 })
 export class AdminModule {}

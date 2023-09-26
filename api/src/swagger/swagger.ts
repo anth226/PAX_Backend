@@ -7,8 +7,8 @@ export default async function swagger(app) {
   for (const ModuleItem of ModuleList) {
     //swagger config
     const config = new DocumentBuilder()
-      .setTitle("PIX ANIME PACEM")
-      .setDescription("PIX ANIME PACEM API description")
+      .setTitle("NOTE Crude")
+      .setDescription("NOTE Crude API description")
       .setVersion("1.0")
       .addBearerAuth(
         { type: "http", scheme: "bearer", bearerFormat: "JWT" },
